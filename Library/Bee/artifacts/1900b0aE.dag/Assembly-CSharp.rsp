@@ -360,8 +360,11 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
+"Assets/_GameFile/Scripts/Animation/AnimationHandleInput.cs"
+"Assets/_GameFile/Scripts/ForTester/SpeedInput.cs"
 "Assets/_GameFile/Scripts/Input/InputAction/Input.cs"
 "Assets/_GameFile/Scripts/Input/PlayerInput/PlayerInput.cs"
+"Assets/_GameFile/Scripts/Movement/Movement_Player/PlayerMovement.cs"
 "Assets/_GameFile/Shader/ShaderHandle.cs"
 -langversion:9.0
 

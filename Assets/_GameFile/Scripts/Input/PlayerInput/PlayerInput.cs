@@ -1,43 +1,51 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
+using System;
 
 public class PlayerInput : MonoBehaviour
 {
-   [SerializeField] private float moveSpeed = 2.5f;
-   private float rotSpeed = default;
    private Input input;
+
+   public Action<Vector2> OnMove;
+   public Action OnAtk;
+
+   public Action<bool> OnMoveAnim;
 
    private void OnDisable() 
    {
      input.Disable();
    }
+
    private void Awake() 
    {
       input = new Input();
       input.Enable();
-      rotSpeed = moveSpeed * 4;
-      input.Player.ATK.performed += ATK;
-   }
 
+      input.Player.ATK.performed += ATK;
+      
+   }
    private void Update() 
    {
-      Move();
+      MoveInput();
    }
+   
 
    private void ATK(InputAction.CallbackContext ctx)
    {
         Debug.Log("ATK");
+        OnAtk?.Invoke();
    }
-   private void Move()
+
+   private void MoveInput()
    {
       Vector2 inPutDir =  input.Player.Move.ReadValue<Vector2>();
-      if(inPutDir==Vector2.zero)return;
+      if(inPutDir==Vector2.zero)
+      {
+         OnMoveAnim?.Invoke(false);
+         return;
+      }
+      OnMove?.Invoke(inPutDir);
+      OnMoveAnim?.Invoke(true);
 
-      Vector3 moveDir = new Vector3(inPutDir.x,0,inPutDir.y);
-      Quaternion rot = Quaternion.Slerp(transform.rotation , Quaternion.LookRotation(moveDir), rotSpeed * Time.deltaTime);
-
-      transform.position += moveDir * moveSpeed * Time.deltaTime;
-      transform.rotation = rot;
-        
    }
 }
