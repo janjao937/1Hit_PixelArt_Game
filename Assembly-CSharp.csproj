@@ -37,11 +37,12 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\_GameFile\Scripts\Input\PlayerInput\PlayerInput.cs" />
+     <Compile Include="Assets\_GameFile\Scripts\Animation\AnimationHandleInput.cs" />
      <Compile Include="Assets\_GameFile\Shader\ShaderHandle.cs" />
      <Compile Include="Assets\_GameFile\Scripts\Input\InputAction\Input.cs" />
-     <Compile Include="Assets\_GameFile\Scripts\Movement\Movement_Player\PlayerMovement.cs" />
      <Compile Include="Assets\_GameFile\Scripts\ForTester\SpeedInput.cs" />
-     <Compile Include="Assets\_GameFile\Scripts\Animation\AnimationHandleInput.cs" />
+     <Compile Include="Assets\_GameFile\Scripts\Movement\Movement_Player\PlayerMovement.cs" />
+     <Compile Include="Assets\_GameFile\Scripts\Camera\CameraFollowTarget.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
