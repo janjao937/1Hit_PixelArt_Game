@@ -4,6 +4,7 @@ using System;
 
 public class PlayerInput : MonoBehaviour
 {
+   [SerializeField] private bool isBlockInput = false;
    private Input input;
 
    public Action<Vector2> OnMove;
@@ -21,8 +22,9 @@ public class PlayerInput : MonoBehaviour
       input = new Input();
       input.Enable();
 
+      input.Player.Block.performed += Block;
+      input.Player.Block.canceled += UnBlock;
       input.Player.ATK.performed += ATK;
-      
    }
    private void Update() 
    {
@@ -32,8 +34,20 @@ public class PlayerInput : MonoBehaviour
 
    private void ATK(InputAction.CallbackContext ctx)
    {
-        Debug.Log("ATK");
-        OnAtk?.Invoke();
+      Debug.Log("ATK");
+      //Stamina Codition
+      OnAtk?.Invoke();
+   }
+   private void Block(InputAction.CallbackContext ctx)
+   {
+      Debug.Log("Block");
+      //Stamina Codition
+      isBlockInput = true;
+   }
+    private void UnBlock(InputAction.CallbackContext ctx)
+   {
+      Debug.Log("UnBlock");
+      isBlockInput = false;
    }
 
    private void MoveInput()
@@ -48,4 +62,6 @@ public class PlayerInput : MonoBehaviour
       OnMoveAnim?.Invoke(true);
 
    }
+
+ 
 }
