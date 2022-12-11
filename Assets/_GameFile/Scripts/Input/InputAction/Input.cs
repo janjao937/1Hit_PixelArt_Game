@@ -53,6 +53,15 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSkill"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f6ee36e-8656-4fd9-8b8c-3e723155dfb4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -143,6 +152,17 @@ public partial class @Input : IInputActionCollection2, IDisposable
                     ""action"": ""ฺBlock"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c553f9c3-addc-4ddf-be36-a9fa4f8f9c6d"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseSkill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -154,6 +174,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         m_Player_ATK = m_Player.FindAction("ATK", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Block = m_Player.FindAction("ฺBlock", throwIfNotFound: true);
+        m_Player_UseSkill = m_Player.FindAction("UseSkill", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -216,6 +237,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ATK;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Block;
+    private readonly InputAction m_Player_UseSkill;
     public struct PlayerActions
     {
         private @Input m_Wrapper;
@@ -223,6 +245,7 @@ public partial class @Input : IInputActionCollection2, IDisposable
         public InputAction @ATK => m_Wrapper.m_Player_ATK;
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Block => m_Wrapper.m_Player_Block;
+        public InputAction @UseSkill => m_Wrapper.m_Player_UseSkill;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -241,6 +264,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @Block.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlock;
                 @Block.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlock;
                 @Block.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBlock;
+                @UseSkill.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill;
+                @UseSkill.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill;
+                @UseSkill.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseSkill;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -254,6 +280,9 @@ public partial class @Input : IInputActionCollection2, IDisposable
                 @Block.started += instance.OnBlock;
                 @Block.performed += instance.OnBlock;
                 @Block.canceled += instance.OnBlock;
+                @UseSkill.started += instance.OnUseSkill;
+                @UseSkill.performed += instance.OnUseSkill;
+                @UseSkill.canceled += instance.OnUseSkill;
             }
         }
     }
@@ -263,5 +292,6 @@ public partial class @Input : IInputActionCollection2, IDisposable
         void OnATK(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
+        void OnUseSkill(InputAction.CallbackContext context);
     }
 }

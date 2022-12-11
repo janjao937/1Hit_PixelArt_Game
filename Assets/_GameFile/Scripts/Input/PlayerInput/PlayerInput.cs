@@ -9,8 +9,10 @@ public class PlayerInput : MonoBehaviour
 
    public Action<Vector2> OnMove;
    public Action OnAtk;
+   public Action OnUseSkill;
 
    public Action<bool> OnMoveAnim;
+   public Action<bool> Onblock;
 
    private void OnDisable() 
    {
@@ -25,6 +27,7 @@ public class PlayerInput : MonoBehaviour
       input.Player.Block.performed += Block;
       input.Player.Block.canceled += UnBlock;
       input.Player.ATK.performed += ATK;
+      input.Player.UseSkill.performed += UseSkill;
    }
    private void Update() 
    {
@@ -32,22 +35,32 @@ public class PlayerInput : MonoBehaviour
    }
    
 
+   private void UseSkill(InputAction.CallbackContext ctx)
+   {
+      Debug.Log("UseSkill");
+      //Stamina Codition
+      OnUseSkill?.Invoke();
+    
+   }
    private void ATK(InputAction.CallbackContext ctx)
    {
       Debug.Log("ATK");
       //Stamina Codition
       OnAtk?.Invoke();
+    
    }
    private void Block(InputAction.CallbackContext ctx)
    {
       Debug.Log("Block");
       //Stamina Codition
       isBlockInput = true;
+      Onblock?.Invoke(isBlockInput);
    }
     private void UnBlock(InputAction.CallbackContext ctx)
    {
       Debug.Log("UnBlock");
       isBlockInput = false;
+      Onblock?.Invoke(isBlockInput);
    }
 
    private void MoveInput()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class UseAttack : MonoBehaviour
 {
@@ -7,19 +8,25 @@ public class UseAttack : MonoBehaviour
     
     [SerializeField]private Transform atkPos;
     [SerializeField]private float atkRadius;
-    [SerializeField]private float atkTimeRange;
+    [SerializeField]private float atkTimeRange = 1.4f;
     [SerializeField]private float idleTimeRange;
 
     private PlayerInput playerInput;
     private bool canAtk = true;
-   // private BaseAtkState atkState = default;
-    float timeTemp;
+
+    private float timeTemp;
+    private PlayerCharacter playerCharacter;
+
+    public event Action OnAtk;
     public float  AtkTimeRange{get => atkTimeRange;}
     public float  IdleTimeRange{get => idleTimeRange;}
+    public bool CanAtk {get=>canAtk;}
 
     private void Awake() 
     {
         playerInput = GetComponent<PlayerInput>();
+        playerCharacter = GetComponent<PlayerCharacter>();
+
        playerInput.OnAtk += UseAtk;
        timeTemp = atkTimeRange;
     }
@@ -40,23 +47,23 @@ public class UseAttack : MonoBehaviour
         }
         canAtk = true;
         atkTimeRange = timeTemp;
-        
-        
     }
     public void UseAtk()
     {
+        if(!playerCharacter.UseStaminaAtk()) return;
         if(!canAtk)return;
         // atkState.UseAtkState();
+        OnAtk?.Invoke();
         OpenATK();
         canAtk = false;
     }
 
     public void OpenATK()
     {
-     
         Collider[] a = Physics.OverlapSphere(atkPos.position,atkRadius,canAtkLayer);
         
-        foreach(var b in a){
+        foreach(var b in a)
+        {
             b.gameObject.SetActive(false);
         }
 
@@ -65,9 +72,6 @@ public class UseAttack : MonoBehaviour
     {
         Debug.Log("off");      
     }
-
-
-
 
 
 #if UNITY_EDITOR
