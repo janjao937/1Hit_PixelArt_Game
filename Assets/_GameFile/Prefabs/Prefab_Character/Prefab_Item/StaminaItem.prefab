@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341a367159f2cff42bdc2a254a4d27b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxStamina: 100
+  MaxStamina: 3
   BlockStamina: 1.5
   AtkStamina: 2
   IncreseStaminaPerSecound: 1
